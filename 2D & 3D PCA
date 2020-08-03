@@ -1,0 +1,43 @@
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+#Making some inputs in an array below
+X = np.array([[-1, -1, 5], [-2, -1, 2], [-3, -2, 8], [1, 1, 2], [2, 1,2], [3, 2,2]])
+
+#Applying PCA
+pca = PCA(n_components=3)
+principalComponents = pca.fit_transform(X)
+print(principalComponents[:,0:3])
+
+
+#Transposing arrays to plot them in x,y,z 
+pcax=principalComponents[:,0:1]
+pcax = pcax.transpose()
+pcay=principalComponents[:,1:2]
+pcay = pcay.transpose()
+pcaz=principalComponents[:,2:3]
+pcaz = pcaz.transpose()
+
+#Printing arrays 
+print(pcax)
+print(pcay)
+print(pcaz)
+
+#2D plotting datapoints of the first two principal components
+plt.plot(pcax,pcay,'ro')
+plt.axis([-4, 5, -4, 5])
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.title('2D PCA')
+
+#3D Plotting datapoints of the first three principal components
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.scatter3D(pcax, pcay, pcaz,c='r', marker='o')
+ax.set_xlabel('PC1')
+ax.set_ylabel('PC2')
+ax.set_zlabel('PC3')
+plt.title("3D PCA") 
+plt.show()
